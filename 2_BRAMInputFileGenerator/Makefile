@@ -37,9 +37,7 @@ Objdump: $(OBJDUMP)
 #rules
 Bin2Data: ./Utils/Bin2Data.c
 	gcc -o Bin2Data ./Utils/Bin2Data.c
-%.i: %.S
-	riscv32-unknown-elf-cpp $< > $@
-%.o: %.i
+%.o: %.S
 	./Utils/riscv32-unknown-elf-as $< -o $@ -march=rv32i
 %.om: %.o
 	./Utils/riscv32-unknown-elf-ld $< -o $@
