@@ -10,12 +10,12 @@ module WBSegReg(
     input wire [3:0] WE,
     output wire [31:0] RD,
     output reg [1:0] LoadedBytesSelect,
-    //数据信号
+    // 
     input wire [31:0] ResultM,
     output reg [31:0] ResultW, 
     input wire [4:0] RdM,
     output reg [4:0] RdW,
-    //控制信号
+    // 
     input wire [2:0] RegWriteM,
     output reg [2:0] RegWriteW,
     input wire MemToRegM,
@@ -60,13 +60,39 @@ module WBSegReg(
         end
 
 
+
+reg [31:0] hit_count = 0, miss_count = 0;  // counter for cache miss and hit times
+reg [31:0] last_addr = 0;   // 
+wire cache_rd_wr = (|WE) | MemToRegM;
+always @ (posedge clk or posedge rst) begin
+    if(rst) begin
+        last_addr  <= 0;
+    end else begin
+        if( cache_rd_wr ) begin
+            last_addr <= A;
+        end
+    end
+end
+
+always @ (posedge clk or posedge rst) begin
+    if(rst) begin
+        hit_count  <= 0;
+        miss_count <= 0;
+    end else begin
+        if( cache_rd_wr & (last_addr!=A) ) begin
+            if(CacheMiss)
+                miss_count <= miss_count+1;
+            else
+                hit_count  <= hit_count +1;
+        end
+    end
+end
+
 cache #(
-    .RD_CYCLE       ( 20            ),    // ?????????? RD_CYCLE ?????
-    .WR_CYCLE       ( 20            ),    // ?????????? WR_CYCLE ?????
-    .LINE_ADDR_LEN  ( 3             ),    // ??cache line?2^3=8??
-    .SET_ADDR_LEN   ( 2             ),    // ?2^2=4??
-    .TAG_ADDR_LEN   ( 12            ),    // ????=2^12?cache???2^(12+2)?cache line
-    .SET_CNT        ( 4             )     // ????=3??????3??????cache line.????????????3????tag??
+    .LINE_ADDR_LEN  ( 3             ),
+    .SET_ADDR_LEN   ( 3             ),
+    .TAG_ADDR_LEN   ( 10            ),
+    .WAY_CNT        ( 4             )
 ) cache_test_instance (
     .clk            ( clk           ),
     .rst            ( rst           ),
