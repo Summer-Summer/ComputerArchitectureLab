@@ -18,7 +18,7 @@ module InstructionRam(
 );
 initial begin douta=0;end
 
-reg [0:1023][31:0] ram_cell;
+reg [31:0] ram_cell [1024];
 
 initial begin
 '''

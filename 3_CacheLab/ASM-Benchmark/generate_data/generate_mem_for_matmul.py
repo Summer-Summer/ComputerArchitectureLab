@@ -16,7 +16,7 @@ module mem #(                   //
     input  [31:0] wr_data       // data write in
 );
 localparam MEM_SIZE = 1<<ADDR_LEN;
-reg [0:%d-1] [31:0] ram_cell;
+reg [31:0] ram_cell [MEM_SIZE];
 
 always @ (posedge clk or posedge rst)
     if(rst)
@@ -52,7 +52,7 @@ else:
         print('    *** Error: parameter must be larger than 1, not %d' % (N, ) )
         sys.exit(-1)
 
-    print(verilog_head % (N*N*3))
+    print(verilog_head)
     
     A, B, C = [], [], []
     for i in range(N):
