@@ -90,8 +90,8 @@ end
 
 cache #(
     .LINE_ADDR_LEN  ( 3             ),
-    .SET_ADDR_LEN   ( 3             ),
-    .TAG_ADDR_LEN   ( 10            ),
+    .SET_ADDR_LEN   ( 2             ),
+    .TAG_ADDR_LEN   ( 8             ),
     .WAY_CNT        ( 4             )
 ) cache_test_instance (
     .clk            ( clk           ),

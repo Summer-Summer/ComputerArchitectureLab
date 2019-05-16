@@ -1,19 +1,19 @@
 
-module main_mem #(      // 主存，每次读写以line 为单使
-    parameter  LINE_ADDR_LEN =  3,  // ?? line ? LINE_SIZE ?word
-    parameter  ADDR_LEN  = 8   // main_mem ?? 2^ADDR_LEN ? line
+module main_mem #(                  // 主存，每次读写以line 为单位
+    parameter  LINE_ADDR_LEN =  3,  // line内地址长度，决定了每个line具有 2^LINE_ADDR_LEN 个 word
+    parameter  ADDR_LEN  = 8        // 主存地址长度，决定了主存具有 2^ADDR_LEN 个 line
 )(
     input  clk, rst,
-    output gnt,        // read or write grant
-    input  [ADDR_LEN-1:0] addr,         // ???????line???????word?byte??
+    output gnt,                     // read or write grant
+    input  [ADDR_LEN-1:0] addr,     // line地址
     input  rd_req,
-    output reg [31:0] rd_line [1<<LINE_ADDR_LEN],  // main_mem ?????line????????word???
+    output reg [31:0] rd_line [1<<LINE_ADDR_LEN],
     input  wr_req,
-    input  [31:0] wr_line [1<<LINE_ADDR_LEN]   // main_mem ?????line????????word???
+    input  [31:0] wr_line [1<<LINE_ADDR_LEN]
 );
 
-localparam  RD_CYCLE  = 50;
-localparam  WR_CYCLE  = 50;
+localparam  RD_CYCLE = 50;
+localparam  WR_CYCLE = 50;
 localparam LINE_SIZE = 1<<LINE_ADDR_LEN;
 
 reg  mem_wr_req = 1'b0;
@@ -21,7 +21,7 @@ reg  [(ADDR_LEN+LINE_ADDR_LEN)-1:0] mem_addr = 0;
 reg  [31:0] mem_wr_data = 0;
 wire [31:0] mem_rd_data;
 
-mem #(                   // 主存，每次读写以line 为单使
+mem #(
     .ADDR_LEN  ( ADDR_LEN + LINE_ADDR_LEN    )
 ) mem_inst (
     .clk       (  clk           ),

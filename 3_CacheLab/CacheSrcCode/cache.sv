@@ -3,7 +3,7 @@
 module cache #(
     parameter  LINE_ADDR_LEN = 3, // line内地址长度，决定了每个line具有2^3个word
     parameter  SET_ADDR_LEN  = 3, // 组地址长度，决定了一共有2^3=8组
-    parameter  TAG_ADDR_LEN  = 7, // tag长度
+    parameter  TAG_ADDR_LEN  = 6, // tag长度
     parameter  WAY_CNT       = 3  // 组相连度，决定了每组中有多少路line，这里是直接映射型cache，因此该参数没用到
 )(
     input  clk, rst,
@@ -117,7 +117,7 @@ wire [   MEM_ADDR_LEN-1 :0] mem_addr = mem_rd_req ? mem_rd_addr : ( mem_wr_req ?
 
 assign miss = (rd_req | wr_req) & ~(cache_hit && cache_stat==IDLE) ;     // 当 有读写请求时，如果cache不处于就绪(IDLE)状态，或者未命中，则miss=1
 
-main_mem #(     // slow main memory
+main_mem #(     // 主存，每次读写以line 为单位
     .LINE_ADDR_LEN  ( LINE_ADDR_LEN          ),
     .ADDR_LEN       ( MEM_ADDR_LEN           )
 ) main_mem_instance (
