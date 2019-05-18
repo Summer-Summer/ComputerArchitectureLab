@@ -9,7 +9,7 @@
 * 阶段1和阶段2**都必须实现**，不是只实现阶段二就行了
 
 ### 实验指导
-* 详见[Here]()
+* 详见[Here](https://raw.githubusercontent.com/Summer-Summer/ComputerArchitectureLab/master/6_branch_prediction/lab4-分支预测-实验指导.pptx)
 
 ### 实验检查 （70%）
 > 阶段1（30%），阶段2（40%）
