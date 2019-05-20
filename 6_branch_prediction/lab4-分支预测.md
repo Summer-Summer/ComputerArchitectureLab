@@ -10,6 +10,16 @@
 
 ### 实验指导
 * 详见[Here](https://raw.githubusercontent.com/Summer-Summer/ComputerArchitectureLab/master/6_branch_prediction/lab4-分支预测-实验指导.pptx)
+* btb
+  * 其实我们要实现的btb本质可以理解为是1bit预测器，如果上次这条分支指令跳转，那么这次它也跳转；如果上次不跳，那么这次也不跳
+  * btb 主要是实现一个buffer，保存当前地址高位、目标地址和有效位，类似于cache，可以采用直接相联方式，可以直接使用reg实现buffer
+  * buffer 放在取指阶段，buffer内容读取一个周期内可以完成
+  * btb的命中：当前指令的地位用于寻址，对比指令的高位和buffer中是否相等并且有效位为1，表示命中，则下一条指令的地址不是pc+4，而是buffer中的内容
+  * 在取指阶段是否命中信息会随着流水线段寄存器传递到ex阶段，根据实际是否跳转和if阶段是否命中信息对buffer进行修改
+* bht
+  * bht 首先要实现一个N\*2的buffer，N为大小，2表示2bit预测
+  * 实现一个状态机，详见**lab4-分支预测-实验指导.pptx**
+  * 用bht来控制是否跳转（btb不命中，bht命中该如何处理？），bht的根据状态机更新，btb表的更新与之前不同
 
 ### 实验检查 （70%）
 > 阶段1（30%），阶段2（40%）
