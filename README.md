@@ -10,7 +10,7 @@ Computer Architecture 2019 Lab
 * Lab4（13-14周）【15%】： 分支预测设计与实现
 * Lab5（第15周）【10%】：学习使用提供的Tomasulo软件模拟器和多Cache一致性软件模拟器，并完成实验报告
 
-![CPU_Modules](https://github.com/Summer-Summer/ComputerArchitectureLab/images/CPU.PNG"CPU_Modules")
+![CPU_Modules](https://github.com/Summer-Summer/ComputerArchitectureLab/blob/master/images/CPU.PNG)
 
 ## 签到与补交
 
